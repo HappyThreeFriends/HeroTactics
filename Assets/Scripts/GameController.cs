@@ -51,6 +51,7 @@ public class GameController : MonoBehaviour
             _map.HasDirectPath(previouslySelectedCheckpoint.Hero.CurrentCheckpoint, checkpoint))
         {
             previouslySelectedCheckpoint.Hero.MoveTo(checkpoint);
+            OnHeroSelected?.Invoke(checkpoint.Hero);
         }
     }
 
