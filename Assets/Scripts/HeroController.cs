@@ -18,8 +18,7 @@ public class HeroController : MonoBehaviour
 
     public void MoveTo(CheckPointController checkpoint)
     {
-        this.transform.position = checkpoint.transform.position;
-        CurrentCheckpoint?.RemoveHero(this);
+        this.transform.position = checkpoint.transform.position;        
         CurrentCheckpoint = checkpoint;
         CurrentCheckpoint.PlaceHero(this);        
     }

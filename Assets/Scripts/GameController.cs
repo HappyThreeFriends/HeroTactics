@@ -7,8 +7,8 @@ public class GameController : MonoBehaviour
     private HeroController[] _heroes;    
     private Map _map;
 
-    public event Action<HeroController> OnHeroSelected;
-    public event Action OnHeroDeselected;
+    public event Action<CheckPointController> OnCheckpointSelected;
+    public event Action OnCheckpointDeselected;
    
     // Start is called before the first frame update
     void Start()
@@ -19,27 +19,20 @@ public class GameController : MonoBehaviour
 
     private void Map_OnMapCreated()
     {
-        _heroes = FindObjectsOfType<HeroController>();
+        _heroes = FindObjectsOfType<HeroController>();        
         foreach (var hero in _heroes)
         {
             hero.MoveTo(_map.CheckPoints.First());
         }
         foreach (var checkpoint in _map.CheckPoints)
         {
-            checkpoint.OnCheckpointSelected += Checkpoint_OnClick;
+            checkpoint.OnCheckpointSelected += Checkpoint_OnSelected;
         }
     }
 
-    private void Checkpoint_OnClick(CheckPointController checkpoint)
-    {
-        if (checkpoint.Hero != null)
-        {
-            OnHeroSelected?.Invoke(checkpoint.Hero);
-        }
-        else
-        {
-            OnHeroDeselected?.Invoke();
-        }
+    private void Checkpoint_OnSelected(CheckPointController checkpoint)
+    {     
+        OnCheckpointSelected?.Invoke(checkpoint);
 
         var previouslySelectedCheckpoint = _map.CheckPoints.SingleOrDefault(c => c.IsSelected);    
         if(previouslySelectedCheckpoint == null)
@@ -47,12 +40,11 @@ public class GameController : MonoBehaviour
             return;
         }
 
-        if (previouslySelectedCheckpoint.Hero != null &&
-            _map.HasDirectPath(previouslySelectedCheckpoint.Hero.CurrentCheckpoint, checkpoint))
+        if(_map.HasDirectPath(previouslySelectedCheckpoint, checkpoint))
         {
-            previouslySelectedCheckpoint.Hero.MoveTo(checkpoint);
-            OnHeroSelected?.Invoke(checkpoint.Hero);
+            previouslySelectedCheckpoint.MoveHeroesTo(checkpoint);
         }
+        OnCheckpointSelected?.Invoke(checkpoint);
     }
 
     // Update is called once per frame
@@ -68,11 +60,7 @@ public class GameController : MonoBehaviour
             var worldTouch = Camera.main.ScreenToWorldPoint(Input.mousePosition);
             if (!Physics2D.Raycast(worldTouch, Vector2.zero, Mathf.Infinity))
             {
-                OnHeroDeselected?.Invoke();
-                foreach (var hero in _heroes)
-                {
-                    hero.Deselect();
-                }
+                OnCheckpointDeselected?.Invoke();               
             }
         }
     }

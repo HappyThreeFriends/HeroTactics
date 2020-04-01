@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class CheckPointController : MonoBehaviour
@@ -10,23 +11,36 @@ public class CheckPointController : MonoBehaviour
 
     public bool IsSelected { get; private set; }
     public List<HeroController> Heroes { get; private set; } = new List<HeroController>();
-    public HeroController Hero { get; private set; }
+    private List<HeroController> _selectedHeroes = new List<HeroController>();
     public event Action<CheckPointController> OnCheckpointSelected;
+
     // Start is called before the first frame update
     void Start()
-    {
-        
+    {   
     }
+
     public void PlaceHero(HeroController hero)
     {
-        Hero = hero;        
+        Heroes.Add(hero);
     }
 
     public void RemoveHero(HeroController hero)
     {
-        Hero = null;
+        Heroes.Remove(hero);
         Deselect();
     }
+
+    public void MoveHeroesTo(CheckPointController other)
+    {
+        foreach(var selectedHero in _selectedHeroes)
+        {
+            selectedHero.MoveTo(other);
+        }
+
+        Heroes = Heroes.Except(_selectedHeroes).ToList();
+        _selectedHeroes.Clear();
+    }
+
     // Update is called once per frame
     void Update()
     {
@@ -55,6 +69,7 @@ public class CheckPointController : MonoBehaviour
     void Select()
     {
         IsSelected = true;
+        _selectedHeroes = Heroes.ToList();
         this.GetComponent<SpriteRenderer>().sprite = SpriteOnSelected;
     }
 
