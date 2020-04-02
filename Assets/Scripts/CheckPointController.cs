@@ -13,7 +13,7 @@ public class CheckPointController : MonoBehaviour
     public List<HeroController> Heroes { get; private set; } = new List<HeroController>();
     private List<HeroController> _selectedHeroes = new List<HeroController>();
     public event Action<CheckPointController> OnCheckpointSelected;
-
+    
     // Start is called before the first frame update
     void Start()
     {   
@@ -59,7 +59,7 @@ public class CheckPointController : MonoBehaviour
         {
             var worldTouch = Camera.main.ScreenToWorldPoint(Input.mousePosition);
             var collider = this.GetComponent<Collider2D>();
-            if (!collider.OverlapPoint(worldTouch))
+            if (!collider.OverlapPoint(worldTouch) && IsSelected)
             {
                 Deselect();
             }

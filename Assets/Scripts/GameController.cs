@@ -26,42 +26,18 @@ public class GameController : MonoBehaviour
         }
         foreach (var checkpoint in _map.CheckPoints)
         {
-            checkpoint.OnCheckpointSelected += Checkpoint_OnSelected;
+            checkpoint.OnCheckpointSelected += Checkpoint_OnSelected;            
         }
     }
 
     private void Checkpoint_OnSelected(CheckPointController checkpoint)
-    {     
-        OnCheckpointSelected?.Invoke(checkpoint);
+    {   
+        var previouslySelectedCheckpoint = _map.CheckPoints.SingleOrDefault(c => c.IsSelected);
 
-        var previouslySelectedCheckpoint = _map.CheckPoints.SingleOrDefault(c => c.IsSelected);    
-        if(previouslySelectedCheckpoint == null)
-        {
-            return;
-        }
-
-        if(_map.HasDirectPath(previouslySelectedCheckpoint, checkpoint))
+        if(previouslySelectedCheckpoint != null && _map.HasDirectPath(previouslySelectedCheckpoint, checkpoint))
         {
             previouslySelectedCheckpoint.MoveHeroesTo(checkpoint);
         }
         OnCheckpointSelected?.Invoke(checkpoint);
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        ClearSelectionIfClickedOutsideOfSelectableObjects();
-    }
-
-    void ClearSelectionIfClickedOutsideOfSelectableObjects()
-    {
-        if (Input.GetMouseButtonDown(0))
-        {
-            var worldTouch = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-            if (!Physics2D.Raycast(worldTouch, Vector2.zero, Mathf.Infinity))
-            {
-                OnCheckpointDeselected?.Invoke();               
-            }
-        }
-    }
+    }    
 }

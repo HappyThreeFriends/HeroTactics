@@ -14,24 +14,18 @@ public class CheckpointOverviewRenderer : MonoBehaviour
     {
         _gameController = FindObjectOfType<GameController>();
         _gameController.OnCheckpointSelected += GameController_OnCheckpointSelected;
-        _gameController.OnCheckpointDeselected += GameController_OnCheckpointDeselected;
-    }
-
-    private void GameController_OnCheckpointDeselected()
-    {
-        foreach (var item in _heroOverviewPanels)
-        {
-            Destroy(item);
-        }
-        _heroOverviewPanels.Clear();
-    }
+    }   
 
     private void GameController_OnCheckpointSelected(CheckPointController checkpoint)
     {
+        // destroy previous overview panels
         foreach (var item in _heroOverviewPanels)
         {
-            Destroy(item);
+            DestroyImmediate(item);
         }
+        _heroOverviewPanels.Clear();
+
+        // create overview panels for newly selected checkpoint
         foreach (var hero in checkpoint.Heroes)
         {
             var heroOverview = Instantiate(HeroOverviewPanelPrefab, this.transform);
