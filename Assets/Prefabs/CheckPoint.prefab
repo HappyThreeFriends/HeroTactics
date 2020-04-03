@@ -47,6 +47,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Sprite: {fileID: 21300000, guid: 777a93d3a6628eb40ba68a140065c33b, type: 3}
   SpriteOnSelected: {fileID: 21300000, guid: 331f49ca506d9fd46ac35d2110ea6981, type: 3}
+  CapturedCheckpointSprites:
+  - Color: Red
+    Sprite: {fileID: 21300000, guid: 0db25512aa17c624ab15b54db102b37e, type: 3}
+  - Color: Blue
+    Sprite: {fileID: 21300000, guid: d9bd946ce92a3e7439d1b142041dbfc5, type: 3}
 --- !u!58 &8994267002929539722
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -99,8 +104,8 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: -2105263517
+  m_SortingLayer: 2
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 777a93d3a6628eb40ba68a140065c33b, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}

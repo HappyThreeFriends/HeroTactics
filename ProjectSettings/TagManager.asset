@@ -43,7 +43,10 @@ TagManager:
   - name: Default
     uniqueID: 0
     locked: 0
-  - name: Map
+  - name: Path
+    uniqueID: 864572913
+    locked: 0
+  - name: Checkpoint
     uniqueID: 2189703779
     locked: 0
   - name: Hero

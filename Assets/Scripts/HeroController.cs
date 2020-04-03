@@ -6,6 +6,7 @@ public class HeroController : MonoBehaviour
 {
     public bool IsSelected { get; private set; }
     public CheckPointController CurrentCheckpoint { get; private set; }
+    public Player Player { get; private set; }
 
     public int Hp;
     public int Attack;
@@ -13,7 +14,12 @@ public class HeroController : MonoBehaviour
 
     void OnMouseDown()
     {
-        IsSelected = true;        
+        IsSelected = true;
+    }
+
+    public void SetPlayer(Player player)
+    {
+        Player = player;
     }
 
     public void MoveTo(CheckPointController checkpoint)

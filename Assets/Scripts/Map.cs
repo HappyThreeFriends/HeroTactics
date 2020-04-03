@@ -41,15 +41,34 @@ public class Map : MonoBehaviour
     {
         var graph = new Graph();
 
-        var node1 = graph.AddNode(new Vector2(0, -5));
-        var node2 = graph.AddNode(new Vector2(1, -1));
-        var node3 = graph.AddNode(new Vector2(-1, 1));
-        var node4 = graph.AddNode(new Vector2(0, -7));
-        var node5 = graph.AddNode(new Vector2(4, -5));
-        graph.AddLink(node1, node2);
-        graph.AddLink(node1, node3);
-        graph.AddLink(node1, node4);
-        graph.AddLink(node1, node5);
+        var baseNode = graph.AddNode(new Vector2(0, -5));
+        var node21 = graph.AddNode(new Vector2(-2, -3));
+        var node22 = graph.AddNode(new Vector2(0, -3));
+        var node23 = graph.AddNode(new Vector2(2, -3));
+        var node31 = graph.AddNode(new Vector2(-5, -1));
+        var node32 = graph.AddNode(new Vector2(-3, -1));
+        var node33 = graph.AddNode(new Vector2(-1, -1));
+        var node34 = graph.AddNode(new Vector2(1, -1));
+        var node35 = graph.AddNode(new Vector2(3, -1));
+        var node36 = graph.AddNode(new Vector2(5, -1));
+
+        graph.AddLink(baseNode, node21);
+        graph.AddLink(baseNode, node22);
+        graph.AddLink(baseNode, node23);
+        
+        //graph.AddLink(node1, node5);
+
+        graph.AddLink(node21, node31);
+        graph.AddLink(node21, node32);
+        graph.AddLink(node21, node33);
+        graph.AddLink(node22, node32);
+        graph.AddLink(node22, node33);
+        graph.AddLink(node22, node34);      
+        graph.AddLink(node23, node34);
+        graph.AddLink(node23, node35);
+        graph.AddLink(node23, node36);
+        //graph.AddLink(baseNode, node23);
+        //graph.AddLink(baseNode, node31);
 
         return graph;
     }

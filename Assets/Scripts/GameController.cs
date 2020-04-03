@@ -9,7 +9,9 @@ public class GameController : MonoBehaviour
 
     public event Action<CheckPointController> OnCheckpointSelected;
     public event Action OnCheckpointDeselected;
-   
+
+    private Player CurrentPlayer = new Player { Id = 1, Color = "Blue" };
+
     // Start is called before the first frame update
     void Start()
     {        
@@ -22,6 +24,8 @@ public class GameController : MonoBehaviour
         _heroes = FindObjectsOfType<HeroController>();        
         foreach (var hero in _heroes)
         {
+            hero.SetPlayer(CurrentPlayer);
+
             hero.MoveTo(_map.CheckPoints.First());
         }
         foreach (var checkpoint in _map.CheckPoints)
